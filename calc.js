@@ -1,17 +1,17 @@
 function add (a, b) {
-  return a + b;
+  return +a + +b;
 };
 
 function substract (a, b) {
-  return a - b;
+  return +a - +b;
 };
 
 function multiply (a, b) {
-  return a * b;
+  return +a * +b;
 };
 
 function divide (a, b) {
-  return a / b;
+  return +a / +b;
 };
 
 function operate (a, b, c) {
@@ -35,12 +35,22 @@ const numbers = document.querySelectorAll(".numbers");
 numbers.forEach((number) => {
   number.addEventListener("click", (e) => {
     if (firstOperand === undefined) {
-      operand = +e.target.textContent;
+      operand = e.target.textContent;
       displayValue = operand;
       firstOperand = operand;
       display.textContent = displayValue;
+    } else if (firstOperand != NaN && calcOperator === undefined) {
+      operand = operand + e.target.textContent;
+      displayValue = operand;
+      firstOperand = operand;
+      display.textContent = displayValue;
+    } else if (secondOperand === undefined) {
+      operand = e.target.textContent;
+      displayValue = operand;
+      secondOperand = operand;
+      display.textContent = displayValue;
     } else {
-      operand = +e.target.textContent;
+      operand = operand + e.target.textContent;
       displayValue = operand;
       secondOperand = operand;
       display.textContent = displayValue;

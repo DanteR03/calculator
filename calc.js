@@ -46,13 +46,13 @@ numbers.forEach((number) => {
       display.textContent = displayValue;
     } else if (secondOperand === undefined) {
       operand = e.target.textContent;
-      displayValue = operand;
       secondOperand = operand;
+      displayValue = `${firstOperand} ${calcOperator} ${secondOperand}`;
       display.textContent = displayValue;
     } else {
       operand = secondOperand + e.target.textContent;
-      displayValue = operand;
       secondOperand = operand;
+      displayValue = `${firstOperand} ${calcOperator} ${secondOperand}`;
       display.textContent = displayValue;
     }
   });
@@ -66,15 +66,16 @@ operators.forEach((operator) => {
   operator.addEventListener("click", (e) => {
     if (secondOperand === undefined) {
       operator = e.target.textContent;
-      displayValue = operator;
       calcOperator = operator;
+      displayValue = `${firstOperand} ${calcOperator}`
       display.textContent = displayValue;
     } else {
-      displayValue = operate(firstOperand, calcOperator, secondOperand);
+      firstOperand = Math.round(operate(firstOperand, calcOperator, secondOperand) * 10) / 10;
+      operator = e.target.textContent;
+      calcOperator = operator;
+      displayValue = `${firstOperand} ${calcOperator}`;
       display.textContent = displayValue;
-      firstOperand = displayValue;
       secondOperand = undefined;
-      calcOperator = undefined;
     }
   });
 });
@@ -82,7 +83,8 @@ operators.forEach((operator) => {
 const result = document.querySelector(".result");
 
 result.addEventListener("click", () => {
-  displayValue = operate(firstOperand, calcOperator, secondOperand);
+  if (firstOperand != undefined && secondOperand != undefined && calcOperator != undefined)
+  displayValue = Math.round(operate(firstOperand, calcOperator, secondOperand) * 10) / 10;
   display.textContent = displayValue;
   firstOperand = displayValue;
   secondOperand = undefined;

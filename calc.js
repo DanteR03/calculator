@@ -34,13 +34,13 @@ const numbers = document.querySelectorAll(".numbers");
 
 numbers.forEach((number) => {
   number.addEventListener("click", (e) => {
-    if (firstOperand === undefined) {
+    if (firstOperand === undefined || firstOperand === 0) {
       operand = e.target.textContent;
       displayValue = operand;
       firstOperand = operand;
       display.textContent = displayValue;
     } else if (firstOperand != NaN && calcOperator === undefined) {
-      operand = operand + e.target.textContent;
+      operand = firstOperand + e.target.textContent;
       displayValue = operand;
       firstOperand = operand;
       display.textContent = displayValue;
@@ -50,7 +50,7 @@ numbers.forEach((number) => {
       secondOperand = operand;
       display.textContent = displayValue;
     } else {
-      operand = operand + e.target.textContent;
+      operand = secondOperand + e.target.textContent;
       displayValue = operand;
       secondOperand = operand;
       display.textContent = displayValue;
@@ -64,10 +64,18 @@ const operators = document.querySelectorAll(".operators");
 
 operators.forEach((operator) => {
   operator.addEventListener("click", (e) => {
-    operator = e.target.textContent;
-    displayValue = operator;
-    calcOperator = operator;
-    display.textContent = displayValue;
+    if (secondOperand === undefined) {
+      operator = e.target.textContent;
+      displayValue = operator;
+      calcOperator = operator;
+      display.textContent = displayValue;
+    } else {
+      displayValue = operate(firstOperand, calcOperator, secondOperand);
+      display.textContent = displayValue;
+      firstOperand = displayValue;
+      secondOperand = undefined;
+      calcOperator = undefined;
+    }
   });
 });
 
@@ -76,6 +84,9 @@ const result = document.querySelector(".result");
 result.addEventListener("click", () => {
   displayValue = operate(firstOperand, calcOperator, secondOperand);
   display.textContent = displayValue;
+  firstOperand = displayValue;
+  secondOperand = undefined;
+  calcOperator = undefined;
 })
 
 const clear = document.querySelector(".clear");

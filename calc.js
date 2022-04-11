@@ -26,19 +26,29 @@ function operate (a, b, c) {
   };
 };
 
-let operand = "";
+let firstOperand;
+let secondOperand;
+let calcOperator;
 
 const numbers = document.querySelectorAll(".numbers");
 
 numbers.forEach((number) => {
   number.addEventListener("click", (e) => {
-    operand = e.target.textContent;
-    displayValue = operand;
-    display.textContent = displayValue;
+    if (firstOperand === undefined) {
+      operand = +e.target.textContent;
+      displayValue = operand;
+      firstOperand = operand;
+      display.textContent = displayValue;
+    } else {
+      operand = +e.target.textContent;
+      displayValue = operand;
+      secondOperand = operand;
+      display.textContent = displayValue;
+    }
   });
 });
 
-let operator = "";
+let operator;
 
 const operators = document.querySelectorAll(".operators");
 
@@ -46,9 +56,17 @@ operators.forEach((operator) => {
   operator.addEventListener("click", (e) => {
     operator = e.target.textContent;
     displayValue = operator;
+    calcOperator = operator;
     display.textContent = displayValue;
   });
 });
+
+const result = document.querySelector(".result");
+
+result.addEventListener("click", () => {
+  displayValue = operate(firstOperand, calcOperator, secondOperand);
+  display.textContent = displayValue;
+})
 
 let displayValue = 0;
 

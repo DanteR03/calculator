@@ -68,6 +68,16 @@ result.addEventListener("click", () => {
   display.textContent = displayValue;
 })
 
+const clear = document.querySelector(".clear");
+
+clear.addEventListener("click", () => {
+  firstOperand = undefined;
+  secondOperand = undefined;
+  calcOperator = undefined;
+  displayValue = 0;
+  display.textContent = displayValue;
+})
+
 let displayValue = 0;
 
 const display = document.querySelector(".display");

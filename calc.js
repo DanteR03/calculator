@@ -26,13 +26,15 @@ function operate (a, b, c) {
   };
 };
 
-let number = "";
+let operand = "";
 
 const numbers = document.querySelectorAll(".numbers");
 
 numbers.forEach((number) => {
   number.addEventListener("click", (e) => {
-    console.log(e.target.textContent);
+    operand = e.target.textContent;
+    displayValue = operand;
+    display.textContent = displayValue;
   });
 });
 
@@ -42,6 +44,13 @@ const operators = document.querySelectorAll(".operators");
 
 operators.forEach((operator) => {
   operator.addEventListener("click", (e) => {
-    console.log(e.target.textContent);
+    operator = e.target.textContent;
+    displayValue = operator;
+    display.textContent = displayValue;
   });
 });
+
+let displayValue = 0;
+
+const display = document.querySelector(".display");
+display.textContent = displayValue;

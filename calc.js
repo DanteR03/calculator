@@ -29,12 +29,13 @@ function operate (a, b, c) {
 let firstOperand;
 let secondOperand;
 let calcOperator;
+let calcResult;
 
 const numbers = document.querySelectorAll(".numbers");
 
 numbers.forEach((number) => {
   number.addEventListener("click", (e) => {
-    if (firstOperand === undefined || firstOperand === 0) {
+    if (firstOperand === undefined) {
       operand = e.target.textContent;
       displayValue = operand;
       firstOperand = operand;
@@ -58,21 +59,30 @@ numbers.forEach((number) => {
   });
 });
 
-let operator;
-
 const operators = document.querySelectorAll(".operators");
 
 operators.forEach((operator) => {
   operator.addEventListener("click", (e) => {
-    if (secondOperand === undefined) {
-      operator = e.target.textContent;
-      calcOperator = operator;
+    if (firstOperand === undefined & secondOperand === undefined) {
+      firstOperand = calcResult;
+      calcResult = undefined;
+      calcOperator = e.target.textContent;
       displayValue = `${firstOperand} ${calcOperator}`
       display.textContent = displayValue;
+    } else if (secondOperand === undefined) {
+      calcOperator = e.target.textContent;
+      displayValue = `${firstOperand} ${calcOperator}`
+      display.textContent = displayValue;
+    } else if (secondOperand == 0 && calcOperator === "/") {
+      displayValue = "ERROR"
+      display.textContent = displayValue;
+      firstOperand = undefined;
+      secondOperand = undefined;
+      calcOperator = undefined;
     } else {
-      firstOperand = Math.round(operate(firstOperand, calcOperator, secondOperand) * 10) / 10;
-      operator = e.target.textContent;
-      calcOperator = operator;
+      calcResult = Math.round(operate(firstOperand, calcOperator, secondOperand) * 10) / 10;
+      firstOperand = calcResult;
+      calcOperator = e.target.textContent;
       displayValue = `${firstOperand} ${calcOperator}`;
       display.textContent = displayValue;
       secondOperand = undefined;
@@ -83,12 +93,20 @@ operators.forEach((operator) => {
 const result = document.querySelector(".result");
 
 result.addEventListener("click", () => {
-  if (firstOperand != undefined && secondOperand != undefined && calcOperator != undefined)
-  displayValue = Math.round(operate(firstOperand, calcOperator, secondOperand) * 10) / 10;
-  display.textContent = displayValue;
-  firstOperand = displayValue;
-  secondOperand = undefined;
-  calcOperator = undefined;
+  if (secondOperand == 0 && calcOperator === "/") {
+    displayValue = "ERROR"
+    display.textContent = displayValue;
+    firstOperand = undefined;
+    secondOperand = undefined;
+    calcOperator = undefined;
+  } else if (firstOperand != undefined && secondOperand != undefined && calcOperator != undefined) {
+    calcResult = Math.round(operate(firstOperand, calcOperator, secondOperand) * 10) / 10;
+    displayValue = calcResult
+    display.textContent = displayValue;
+    firstOperand = undefined;
+    secondOperand = undefined;
+    calcOperator = undefined;
+  };
 })
 
 const clear = document.querySelector(".clear");
@@ -97,6 +115,7 @@ clear.addEventListener("click", () => {
   firstOperand = undefined;
   secondOperand = undefined;
   calcOperator = undefined;
+  calcResult = undefined;
   displayValue = 0;
   display.textContent = displayValue;
 })
@@ -105,3 +124,4 @@ let displayValue = 0;
 
 const display = document.querySelector(".display");
 display.textContent = displayValue;
+

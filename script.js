@@ -2,10 +2,15 @@ let number1 = 0;
 let number2 = null;
 let operator = "";
 const calculatorDisplay = document.querySelector("#calculator-display");
-const calculatorButtons = document.querySelectorAll(".calculator-button");
+const numberButtons = document.querySelectorAll(".number-button");
+const functionButtons = document.querySelectorAll(".function-button");
 
-calculatorButtons.forEach((button) => {
-    button.addEventListener("click", pressButton);
+numberButtons.forEach((button) => {
+    button.addEventListener("click", pressNumberButton);
+});
+
+functionButtons.forEach((button) => {
+    button.addEventListener("click", pressFunctionButton);
 })
 
 function populateDisplay() {
@@ -18,26 +23,46 @@ function populateDisplay() {
     }
 }
 
-function pressButton(button) {
+function pressNumberButton(button) {
     let buttonContent = button.target.textContent;
-    if (buttonContent === "C") {
-        number1 = 0;
-        number2 = null;
-        operator = "";
-    } else if (buttonContent === "=") {
-        number1 = operate(number1, number2, operator);
-        number2 = null;
-        operator = "";
-    } else if (Number.isInteger(+buttonContent) && operator === "" && number1 !== 0) {
-        number1 += buttonContent;
-    } else if (Number.isInteger(+buttonContent) && operator === "") {
+    switch (true) {
+    case (Number.isInteger(+buttonContent) && operator === "" && number1 == 0):
         number1 = buttonContent;
-    } else if (Number.isInteger(+buttonContent) && operator !== "" && number2 !== null) {
-        number2 += buttonContent;
-    } else if (Number.isInteger(+buttonContent) && operator !== "") {
+        break;
+    case (Number.isInteger(+buttonContent) && operator === ""):
+        number1 += buttonContent;
+        break;
+    case (Number.isInteger(+buttonContent) && operator !== "" && number2 === null):
         number2 = buttonContent;
-    } else {
-        operator = buttonContent;
+        break;
+    case (Number.isInteger(+buttonContent) && operator !== ""):
+        number2 += buttonContent;
+        break;
+    };
+    populateDisplay();
+}
+
+function pressFunctionButton(button) {
+    let buttonContent = button.target.textContent;
+    switch (true) {
+        case (buttonContent === "C"):
+            number1 = 0;
+            number2 = null;
+            operator = "";
+            break;
+        case (buttonContent === "=" && operator !== "" && number2 !== null):
+            number1 = operate(number1, number2, operator);
+            number2 = null;
+            operator = "";
+            break;
+        case (buttonContent !== "=" && operator !== "" && number2 !== null):
+            number1 = operate(number1, number2, operator);
+            number2 = null;
+            operator = buttonContent;
+            break;
+        case (buttonContent !== "=" && operator == ""):
+            operator = buttonContent;
+            break;
     };
     populateDisplay();
 }
@@ -55,22 +80,24 @@ function multiplyNums(num1, num2) {
 }
 
 function divideNums(num1, num2) {
-    return (num2 === 0) ? +num1 / +num2 : "You can't divide by zero!"
+    return (+num2 !== 0) ? +num1 / +num2 : "You can't divide by zero!"
 }
 
 function operate(num1, num2, operator) {
+    let result;
     switch (operator) {
         case "+":
-            return addNums(num1, num2);
+            result = addNums(num1, num2);
             break;
         case "-":
-            return subtractNums(num1, num2);
+            result = subtractNums(num1, num2);
             break;
         case "x":
-            return multiplyNums(num1, num2);
+            result = multiplyNums(num1, num2);
             break;
         case "÷":
-            return divideNums(num1, num2);
+            result = divideNums(num1, num2);
             break;
     };
+    return result;
 }

@@ -56,6 +56,12 @@ function pressFunctionButton(button) {
         case (buttonContent === "."):
             addDecimal();
             break;
+        case (buttonContent === "-" && number1 == 0 && operator === ""):
+            number1 = "-";
+            break;
+        case (buttonContent === "-" && number2 === null && operator !== ""):
+            number2 = "-";
+            break;
         case (buttonContent === "=" && operator !== "" && number2 !== null):
             number1 = operate(number1, number2, operator);
             number2 = null;

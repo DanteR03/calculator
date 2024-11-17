@@ -1,4 +1,4 @@
-let number1 = 0;
+let number1 = "0";
 let number2 = null;
 let operator = "";
 const calculatorDisplay = document.querySelector("#calculator-display");
@@ -32,7 +32,7 @@ function pressNumberButton(button) {
     case (Number.isInteger(+buttonContent) && operator === ""):
         number1 += buttonContent;
         break;
-    case (Number.isInteger(+buttonContent) && operator !== "" && number2 === null):
+    case (Number.isInteger(+buttonContent) && operator !== "" && number2 === null || number2 == 0):
         number2 = buttonContent;
         break;
     case (Number.isInteger(+buttonContent) && operator !== ""):
@@ -49,6 +49,9 @@ function pressFunctionButton(button) {
             number1 = 0;
             number2 = null;
             operator = "";
+            break;
+        case (buttonContent === "←"):
+            eraseInput();
             break;
         case (buttonContent === "=" && operator !== "" && number2 !== null):
             number1 = operate(number1, number2, operator);
@@ -70,6 +73,26 @@ function pressFunctionButton(button) {
 function countDecimals(number) {
     if (Math.floor(number) !== number) {
         return number.toString().split(".")[1].length || 0;
+    }
+}
+
+function eraseInput() {
+    switch (true) {
+        case (number1.length === 1 && operator === ""):
+            number1 = 0;
+            break;
+        case (number1.length > 1 && operator === ""):
+            number1 = number1.substring(0, number1.length - 1);
+            break;
+        case (number2 === null && operator !== ""):
+            operator = "";
+            break;
+        case (number2.length === 1 && operator !== ""):
+            number2 = null;
+            break;
+        case (number2.length > 1 && operator !== ""):
+            number2 = number2.substring(0, number2.length - 1);
+            break;
     }
 }
 
@@ -110,5 +133,5 @@ function operate(num1, num2, operator) {
             result = divideNums(num1, num2);
             break;
     };
-    return (countDecimals(result) > 6) ? result.toFixed(6) : result;
+    return (countDecimals(result) > 6) ? result.toFixed(6).toString() : result.toString();
 }

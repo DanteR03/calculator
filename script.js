@@ -67,6 +67,12 @@ function pressFunctionButton(button) {
     populateDisplay();
 }
 
+function countDecimals(number) {
+    if (Math.floor(number) !== number) {
+        return number.toString().split(".")[1].length || 0;
+    }
+}
+
 function addNums(num1, num2) {
     return +num1 + +num2;
 }
@@ -80,7 +86,12 @@ function multiplyNums(num1, num2) {
 }
 
 function divideNums(num1, num2) {
-    return (+num2 !== 0) ? +num1 / +num2 : "You can't divide by zero!"
+    if (+num2 !== 0) {
+        return +num1 / +num2;
+    } else {
+        alert("You can't divide by zero!");
+        return 0;
+    }
 }
 
 function operate(num1, num2, operator) {
@@ -99,5 +110,5 @@ function operate(num1, num2, operator) {
             result = divideNums(num1, num2);
             break;
     };
-    return result;
+    return (countDecimals(result) > 6) ? result.toFixed(6) : result;
 }

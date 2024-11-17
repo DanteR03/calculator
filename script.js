@@ -26,13 +26,13 @@ function populateDisplay() {
 function pressNumberButton(button) {
     let buttonContent = button.target.textContent;
     switch (true) {
-    case (Number.isInteger(+buttonContent) && operator === "" && number1 == 0):
+    case (Number.isInteger(+buttonContent) && operator === "" && number1 === "0"):
         number1 = buttonContent;
         break;
     case (Number.isInteger(+buttonContent) && operator === ""):
         number1 += buttonContent;
         break;
-    case (Number.isInteger(+buttonContent) && operator !== "" && number2 === null || number2 == 0):
+    case (Number.isInteger(+buttonContent) && operator !== "" && number2 === null || number2 === "0"):
         number2 = buttonContent;
         break;
     case (Number.isInteger(+buttonContent) && operator !== ""):
@@ -46,7 +46,7 @@ function pressFunctionButton(button) {
     let buttonContent = button.target.textContent;
     switch (true) {
         case (buttonContent === "C"):
-            number1 = 0;
+            number1 = "0";
             number2 = null;
             operator = "";
             break;
@@ -72,7 +72,7 @@ function pressFunctionButton(button) {
             number2 = null;
             operator = buttonContent;
             break;
-        case (buttonContent !== "=" && operator == "" || operator !== buttonContent):
+        case (buttonContent !== "=" && operator !== buttonContent):
             operator = buttonContent;
             break;
     };

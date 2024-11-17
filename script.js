@@ -59,7 +59,7 @@ function pressFunctionButton(button) {
         case (buttonContent === "-" && number1 == 0 && operator === ""):
             number1 = "-";
             break;
-        case (buttonContent === "-" && number2 === null && operator !== ""):
+        case (buttonContent === "-" && number2 === null && operator !== "" && operator !== "-"):
             number2 = "-";
             break;
         case (buttonContent === "=" && operator !== "" && number2 !== null):
@@ -72,7 +72,7 @@ function pressFunctionButton(button) {
             number2 = null;
             operator = buttonContent;
             break;
-        case (buttonContent !== "=" && operator == ""):
+        case (buttonContent !== "=" && operator == "" || operator !== buttonContent):
             operator = buttonContent;
             break;
     };
@@ -88,7 +88,7 @@ function countDecimals(number) {
 function eraseInput() {
     switch (true) {
         case (number1.length === 1 && operator === ""):
-            number1 = 0;
+            number1 = "0";
             break;
         case (number1.length > 1 && operator === ""):
             number1 = number1.substring(0, number1.length - 1);
@@ -110,7 +110,7 @@ function addDecimal() {
         case (!number1.includes(".") && operator === ""):
             number1 += ".";
             break;
-        case (!number2.includes(".") && number2 !== null && operator !== ""):
+        case (number2 !== null && !number2.includes(".") && operator !== ""):
             number2 += ".";
             break;
     }

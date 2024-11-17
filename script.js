@@ -53,6 +53,9 @@ function pressFunctionButton(button) {
         case (buttonContent === "←"):
             eraseInput();
             break;
+        case (buttonContent === "."):
+            addDecimal();
+            break;
         case (buttonContent === "=" && operator !== "" && number2 !== null):
             number1 = operate(number1, number2, operator);
             number2 = null;
@@ -92,6 +95,17 @@ function eraseInput() {
             break;
         case (number2.length > 1 && operator !== ""):
             number2 = number2.substring(0, number2.length - 1);
+            break;
+    }
+}
+
+function addDecimal() {
+    switch (true) {
+        case (!number1.includes(".") && operator === ""):
+            number1 += ".";
+            break;
+        case (!number2.includes(".") && number2 !== null && operator !== ""):
+            number2 += ".";
             break;
     }
 }

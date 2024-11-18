@@ -7,7 +7,7 @@ const functionButtons = document.querySelectorAll(".function-button");
 
 numberButtons.forEach((button) => {
     button.addEventListener("click", pressNumberButton);
-});
+})
 
 functionButtons.forEach((button) => {
     button.addEventListener("click", pressFunctionButton);

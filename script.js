@@ -67,7 +67,7 @@ function pressFunctionButton(button) {
             number2 = null;
             operator = "";
             break;
-        case (buttonContent !== "=" && operator !== "" && number2 !== null):
+        case (buttonContent !== "=" && operator !== "" && number2 !== null && number2 !== "-"):
             number1 = operate(number1, number2, operator);
             number2 = null;
             operator = buttonContent;
